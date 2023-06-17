@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">final</string>
+    <string name="start">START</string>
+    <string name="end">END</string>
 </resources>

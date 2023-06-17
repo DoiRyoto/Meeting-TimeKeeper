@@ -1,8 +1,4 @@
-import sys
-
-def speak_contents():
-    mode = sys.argv[2]
-
+def speak_contents(mode):
     if mode == "start":
         text = "発表を始めてください" # Todo: ChatGPTを使うなど
     elif mode == "end":
