@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     private Activity mParentActivity;
@@ -17,7 +18,11 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
 
     public HttpConnectionTask(Activity parentActivity, String mode){
         this.mParentActivity = parentActivity;
-        mUri = "http://IP/~pi/xxxxx.py?" + "mode=" + mode; // TODO: GONGさんが作ったPythonプログラムの名前に変更する
+        if(Objects.equals(mode, "start")){
+            mUri = "http://IP/~pi/start.php?" + "mode=" + mode;
+        } else if (Objects.equals(mode, "end")) {
+            mUri = "http://IP/~pi/end.php?" + "mode=" + mode;
+        }
     }
 
     @Override
