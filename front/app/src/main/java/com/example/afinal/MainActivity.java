@@ -1,4 +1,4 @@
-package com.example.meetingtimekeeper;
+package com.example.afinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
