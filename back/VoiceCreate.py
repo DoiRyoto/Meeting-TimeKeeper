@@ -1,8 +1,11 @@
 from gtts import gTTS
 import pygame
 import sys
+from speak_contents import speak_contents
 
-text = sys.argv[1]  # 入力されたテキストをコマンドラインパラメータで取得する
+
+mode = sys.argv[2]  # 入力されたモードをコマンドラインパラメータで取得する
+text = speak_contents(mode)  # 入力されたテキストをコマンドラインパラメータで取得する
 output_file = 'output.mp3'
 
 tts = gTTS(text, lang='ja')
