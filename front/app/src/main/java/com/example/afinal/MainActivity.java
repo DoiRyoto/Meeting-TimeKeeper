@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
     private EditText minutesEditText;
     private EditText secondsEditText;
-    private Button updateButton;
+    public static boolean isTimerExpired = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,12 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     button.setText("END");
                     HttpConnectionTask task = new HttpConnectionTask(mainActivity, "start");
                     task.execute();
-                    timeHandler.startTimer();
+                    String minutesString = minutesEditText.getText().toString();
+                    String secondsString = secondsEditText.getText().toString();
+
+                    int minutes = Integer.parseInt(minutesString);
+                    int seconds = Integer.parseInt(secondsString);
+                    timeHandler.startTimer(minutes, seconds);
                 } else if (String.valueOf(button.getText()).equals("END")) {
                     button.setText("START");
                     HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end");
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     timeHandler.stopTimer();
                     minutesEditText.setText("00");
                     secondsEditText.setText("00");
+                    // Set EditText text color to default (black)
+                    minutesEditText.setTextColor(getResources().getColor(android.R.color.black));
+                    secondsEditText.setTextColor(getResources().getColor(android.R.color.black));
                 }
             }
         });
@@ -54,5 +62,11 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
     public void onUpdate(String[] time) {
         minutesEditText.setText(time[0]);
         secondsEditText.setText(time[1]);
+
+        if (isTimerExpired) {
+            // Set EditText text color to red
+            minutesEditText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            secondsEditText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        }
     }
 }

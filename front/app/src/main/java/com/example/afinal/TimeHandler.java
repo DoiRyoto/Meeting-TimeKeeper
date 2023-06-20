@@ -3,6 +3,7 @@ package com.example.afinal;
 import android.os.Handler;
 import android.os.Looper;
 
+
 public class TimeHandler {
     private Handler handler;
     private Runnable runnable;
@@ -17,7 +18,9 @@ public class TimeHandler {
         this.updateListener = listener;
     }
 
-    public void startTimer() {
+    public void startTimer(int minutes, int seconds) {
+        int timeInSeconds = minutes * 60 + seconds;
+        int milliseconds = timeInSeconds * 1000;
         handler = new Handler(Looper.getMainLooper());
         startTime = System.currentTimeMillis(); // reset startTime
         runnable = new Runnable() {
@@ -25,7 +28,14 @@ public class TimeHandler {
             public void run() {
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - startTime;
-                String[] time = formatTime(elapsedTime);
+                long remainingTime = milliseconds - elapsedTime;
+                String[] time;
+                if(remainingTime < 0) {
+                    time = formatTime( - remainingTime);
+                    MainActivity.isTimerExpired = true;
+                } else {
+                    time = formatTime(remainingTime);
+                }
                 if (updateListener != null) {
                     updateListener.onUpdate(time);
                 }
@@ -33,12 +43,16 @@ public class TimeHandler {
             }
         };
         handler.post(runnable); // First time the task is performed
+
+
     }
 
     public void stopTimer() {
         if (handler != null) {
             handler.removeCallbacks(runnable);
         }
+
+        MainActivity.isTimerExpired = false;
     }
 
     private String[] formatTime(long elapsedTime) {
