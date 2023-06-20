@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -12,13 +15,13 @@ import java.util.Objects;
 
 public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     private Activity mParentActivity;
+    private Common c;
     private ProgressDialog mDialog = null;
     public String mUri;
-    public String num;
-    public String stat;
 
-    public HttpConnectionTask(Activity parentActivity, String mode){
+    public HttpConnectionTask(Activity parentActivity, String mode, Common c){
         this.mParentActivity = parentActivity;
+        this.c = c;
         if(Objects.equals(mode, "start")){
             mUri = "http://192.168.32.32/~pi/start.php?" + "mode=" + mode;
         } else if (Objects.equals(mode, "end")) {
@@ -41,6 +44,7 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String string){
         mDialog.dismiss();
+        this.c.state = string;
     }
 
     private String exec_get(){
@@ -76,6 +80,7 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
             } catch (Exception ignored){
             }
         }
+
         return src;
     }
 }
