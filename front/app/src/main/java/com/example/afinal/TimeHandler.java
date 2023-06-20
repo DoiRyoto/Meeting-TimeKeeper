@@ -10,7 +10,7 @@ public class TimeHandler {
     private UpdateListener updateListener;
 
     public interface UpdateListener {
-        void onUpdate(String time);
+        void onUpdate(String time[]);
     }
 
     public TimeHandler(UpdateListener listener) {
@@ -25,7 +25,7 @@ public class TimeHandler {
             public void run() {
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - startTime;
-                String time = formatTime(elapsedTime);
+                String[] time = formatTime(elapsedTime);
                 if (updateListener != null) {
                     updateListener.onUpdate(time);
                 }
@@ -41,13 +41,13 @@ public class TimeHandler {
         }
     }
 
-    private String formatTime(long elapsedTime) {
+    private String[] formatTime(long elapsedTime) {
         int seconds = (int) (elapsedTime / 1000);
         int minutes = seconds / 60;
 
         seconds %= 60;
 
-        String time = String.format("%02d:%02d", minutes, seconds);
+        String[] time = {String.valueOf(minutes), String.valueOf(seconds)};
         return time;
     }
 
