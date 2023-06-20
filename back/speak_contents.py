@@ -1,7 +1,9 @@
 def speak_contents(mode):
     if mode == "start":
-        text = "発表を始めてください" # Todo: ChatGPTを使うなど
+        text = "/home/pi/build-in-app/Voice/start_overall_1.mp3"
+        print("play: {}".format(text))
     elif mode == "end":
-        text = "発表をやめてください" # Todo: ChatGPTを使うなど
+        text = "/home/pi/build-in-app/Voice/end_overall_1.mp3"
+        print("play: {}".format(text))
 
     return text
