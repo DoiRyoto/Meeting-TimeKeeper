@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -13,17 +16,20 @@ import java.util.Objects;
 
 public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     private Activity mParentActivity;
+    private Common c;
     private ProgressDialog mDialog = null;
     public String mUri;
-    public String num;
-    public String stat;
 
-    public HttpConnectionTask(Activity parentActivity, String mode){
+    public HttpConnectionTask(Activity parentActivity, String mode, Common c){
         this.mParentActivity = parentActivity;
-        if(Objects.equals(mode, "start")){
-            mUri = "http://192.168.32.32/~pi/start.php?" + "mode=" + mode;
-        } else if (Objects.equals(mode, "end")) {
-            mUri = "http://192.168.32.32/~pi/end.php?" + "mode=" + mode;
+        this.c = c;
+        if (Objects.equals(mode, "start-monitor")){
+            // モニター開始
+            mUri = "http://192.168.32.32/~pi/voice_monitor.php";
+            c.monitor = "monitoring";
+        } else {
+            // 音声の再生
+            mUri = "http://192.168.32.32/~pi/voice_create.php?" + "mode=" + mode;
         }
     }
 
@@ -42,13 +48,18 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String string){
         mDialog.dismiss();
+        if (Objects.equals(c.monitor, "monitoring")){
+            // モニターが終了したら，状態を変更
+            c.monitor = "non";
+            c.state = "end-monitoring";
+        }
     }
 
     private String exec_get(){
         HttpURLConnection http = null;
         InputStream in = null;
         String src = "";
-        try{
+        try {
             URL url = new URL(mUri);
             Log.d("url", String.valueOf(url));
             http = (HttpURLConnection) url.openConnection();
@@ -77,8 +88,7 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
             } catch (Exception ignored){
             }
         }
+
         return src;
     }
-
-
 }
