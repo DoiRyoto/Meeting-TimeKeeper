@@ -48,11 +48,10 @@ public class TimeHandler {
     }
 
     public void stopTimer() {
+        MainActivity.isTimerExpired = false;
         if (handler != null) {
             handler.removeCallbacks(runnable);
         }
-
-        MainActivity.isTimerExpired = false;
     }
 
     private String[] formatTime(long elapsedTime) {

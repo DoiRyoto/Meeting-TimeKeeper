@@ -28,12 +28,10 @@ class SoundSurveillance:
     def detect_sound(self, indata, frames, time, status):
         volume = np.linalg.norm(indata) * 10  # indataからvolumeを計算 
         if volume > self.VOLUME_THRESHOLD:  #volumeが閾値を超えていた時の処理    
-            print(volume)
             self.QUIT_COUNT =0
         else:
             self.QUIT_COUNT += 1
             if self.QUIT_COUNT > 10 :
-                print ('stop listen')
                 raise sd.CallbackStop
                 #ここで喋らせる
             

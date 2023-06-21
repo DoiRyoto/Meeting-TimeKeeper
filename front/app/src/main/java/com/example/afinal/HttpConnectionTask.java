@@ -23,10 +23,11 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     public HttpConnectionTask(Activity parentActivity, String mode, Common c){
         this.mParentActivity = parentActivity;
         this.c = c;
-        if(Objects.equals(mode, "start")){
-            mUri = "http://192.168.32.32/~pi/start.php?" + "mode=" + mode;
-        } else if (Objects.equals(mode, "end")) {
-            mUri = "http://192.168.32.32/~pi/end.php?" + "mode=" + mode;
+        if (Objects.equals(mode, "start-monitor")){
+            mUri = "http://192.168.32.32/~pi/voice_monitor.php";
+            c.monitor = "monitoring";
+        } else {
+            mUri = "http://192.168.32.32/~pi/voice_create.php?" + "mode=" + mode;
         }
     }
 
@@ -45,14 +46,17 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String string){
         mDialog.dismiss();
-        this.c.state = string;
+        if (Objects.equals(c.monitor, "monitoring")){
+            c.monitor = "non";
+            c.state = "end-monitoring";
+        }
     }
 
     private String exec_get(){
         HttpURLConnection http = null;
         InputStream in = null;
         String src = "";
-        try{
+        try {
             URL url = new URL(mUri);
             Log.d("url", String.valueOf(url));
             http = (HttpURLConnection) url.openConnection();
