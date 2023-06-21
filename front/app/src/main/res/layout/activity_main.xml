@@ -7,13 +7,31 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="50px"
-        android:textAlignment="center"/>
+        android:layout_height="90dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/minutesEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:hint="Minutes"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/colon"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:text=":" />
+
+        <EditText
+            android:id="@+id/secondsEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:hint="Seconds"
+            android:inputType="number" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
