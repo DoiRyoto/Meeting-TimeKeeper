@@ -24,9 +24,11 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
         this.mParentActivity = parentActivity;
         this.c = c;
         if (Objects.equals(mode, "start-monitor")){
+            // モニター開始
             mUri = "http://192.168.32.32/~pi/voice_monitor.php";
             c.monitor = "monitoring";
         } else {
+            // 音声の再生
             mUri = "http://192.168.32.32/~pi/voice_create.php?" + "mode=" + mode;
         }
     }
@@ -47,6 +49,7 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String string){
         mDialog.dismiss();
         if (Objects.equals(c.monitor, "monitoring")){
+            // モニターが終了したら，状態を変更
             c.monitor = "non";
             c.state = "end-monitoring";
         }
@@ -88,6 +91,4 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
 
         return src;
     }
-
-
 }

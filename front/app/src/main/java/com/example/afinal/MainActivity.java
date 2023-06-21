@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivity = this;
-        c = (Common) getApplication();
+
+        c = (Common) getApplication(); // 状態管理のためのクラス
 
         minutesEditText = findViewById(R.id.minutesEditText);
         secondsEditText = findViewById(R.id.secondsEditText);
@@ -36,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 状態がスタンバイなら開始用の音声を再生
                 if(Objects.equals(c.state, "standby") && String.valueOf(button.getText()).equals("START")){
-                    c.state = "processing";
+                    c.state = "processing"; // 状態を処理中に変更
                     button.setText("END");
                     HttpConnectionTask task = new HttpConnectionTask(mainActivity, "start", c);
                     task.execute();
@@ -48,14 +50,16 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     int seconds = Integer.parseInt(secondsString);
                     timeHandler.startTimer(minutes, seconds);
                 } else if (String.valueOf(button.getText()).equals("END")) {
-                    c.state = "standby";
-                    c.monitor = "non";
+                    c.state = "standby"; // 状態をスタンバイに変更
+                    c.monitor = "non"; // 音声モニターもなしに変更
                     if (isTimerExpired) {
+                        // 手動で停止した際，時間切れだったら強制終了の音声を再生
                         stopTimer();
                         Log.d("mode", "end-manual");
                         HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end", c);
                         task.execute();
                     } else {
+                        // 手動で停止した際，時間切れでないなら終了の音声を再生
                         stopTimer();
                         Log.d("mode", "end-force-manual");
                         HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
@@ -69,12 +73,11 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
     @Override
     public void onUpdate(String[] time) {
-        Log.d("check", String.valueOf(isTimerExpired));
         minutesEditText.setText(time[0]);
         secondsEditText.setText(time[1]);
 
-        Log.d("check", c.state);
-        Log.d("check", c.monitor);
+        // Log.d("check", c.state);
+        // Log.d("check", c.monitor);
 
         if (isTimerExpired) {
             // Set EditText text color to red
@@ -82,12 +85,14 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
             secondsEditText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
 
             if (Objects.equals(c.monitor, "non") && Objects.equals(c.state, "processing")) {
+                // 時間切れで音声がモニターされていないなら，音声モニターを開始
                 HttpConnectionTask task = new HttpConnectionTask(mainActivity, "start-monitor", c);
                 task.execute();
             } else if(Objects.equals(c.monitor, "non") && Objects.equals(c.state, "end-monitoring")){
+                // 時間切れで音声モニターが終了していた場合，状態をスタンバイに変更し強制終了の音声を再生
+                // issue: タイマーが止まらない
                 c.state = "standby";
                 stopTimer();
-                Log.d("mode", "end-force-auto");
                 HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
                 task.execute();
             }
