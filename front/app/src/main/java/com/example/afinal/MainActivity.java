@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     if (isTimerExpired) {
                         // 手動で停止した際，時間切れだったら強制終了の音声を再生
                         stopTimer();
-                        Log.d("mode", "end-manual");
-                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end", c);
+                        Log.d("mode", "end-force-manual");
+                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
                         task.execute();
                     } else {
                         // 手動で停止した際，時間切れでないなら終了の音声を再生
                         stopTimer();
-                        Log.d("mode", "end-force-manual");
-                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
+                        Log.d("mode", "end-manual");
+                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end", c);
                         task.execute();
                     }
                 }
