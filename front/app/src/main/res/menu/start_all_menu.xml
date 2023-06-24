@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/start_all_item1"
+        android:title="そろそろ時間なので終わりにしてください" />
+    <item
+        android:id="@+id/start_all_item2"
+        android:title="ありがとうございました。次の人お願いします。" />
+    <item
+        android:id="@+id/start_all_item3"
+        android:title="ゼミを始めます" />
+</menu>
