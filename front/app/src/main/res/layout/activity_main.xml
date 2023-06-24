@@ -8,35 +8,126 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginStart="120dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
         <EditText
             android:id="@+id/minutesEditText"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:hint="Minutes"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:text="00"
+            android:textColor="@color/white"
             android:inputType="number" />
 
         <TextView
             android:id="@+id/colon"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
             android:text=":" />
 
         <EditText
             android:id="@+id/secondsEditText"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:hint="Seconds"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:text="00"
+            android:textColor="@color/white"
             android:inputType="number" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/timer_button"
+        style="@android:style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/button_white"
+        android:textColor="#696969"
         android:text="@string/start" />
+
+    <Button
+        android:id="@+id/start_all_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="ゼミ開始" />
+
+    <Button
+        android:id="@+id/start_individual_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="発表開始" />
+
+    <Button
+        android:id="@+id/end_individual_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="発表終了" />
+
+    <Button
+        android:id="@+id/start_comment_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="質問開始" />
+
+    <Button
+        android:id="@+id/end_comment_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="質問終了" />
+
+    <Button
+        android:id="@+id/end_all_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/button_grey"
+        android:textColor="@color/white"
+        android:text="ゼミ終了" />
+
+
 
 </LinearLayout>
