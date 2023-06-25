@@ -60,7 +60,10 @@ public class TimeHandler {
 
         seconds %= 60;
 
-        String[] time = {String.valueOf(minutes), String.valueOf(seconds)};
+        String formattedMinutes = String.format("%02d", minutes);
+        String formattedSeconds = String.format("%02d", seconds);
+
+        String[] time = {formattedMinutes, formattedSeconds};
         return time;
     }
 
