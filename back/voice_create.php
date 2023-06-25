@@ -6,7 +6,7 @@ define("PASSWORD", "xxxxxxxxxxxxxxxx");
 if(!is_null($_GET["mode"])){
 $sconnection = ssh2_connect(ADDRESS, 22);
 ssh2_auth_password($sconnection, USER, PASSWORD);
-$command = "python"." "."/home/pi/build-in-app/VoiceCreate.py"." ".$_GET["mode"];
+$command = "python"." "."/home/pi/build-in-app/VoiceCreate.py"." ".$_GET["mode"]." ".$_GET["no"];
 $stdio_stream = ssh2_exec($sconnection, $command);
 }
 ?>

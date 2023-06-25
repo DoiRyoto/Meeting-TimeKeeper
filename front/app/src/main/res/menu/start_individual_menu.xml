@@ -2,11 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/start_individual_item1"
-        android:title="item1" />
+        android:title="発表よろしくお願いします。" />
     <item
         android:id="@+id/start_individual_item2"
-        android:title="item2" />
-    <item
-        android:id="@+id/start_individual_item3"
-        android:title="item3" />
+        android:title="発表を始めてください。" />
 </menu>

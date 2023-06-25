@@ -1,9 +1,14 @@
-def speak_contents(mode):
-    if mode == "start":
-        text = "/home/pi/build-in-app/Voice/start_overall_1.mp3"
-    elif mode == "end":
-        text = "/home/pi/build-in-app/Voice/end_overall_1.mp3"
-    elif mode == "end-force":
-        text = "/home/pi/build-in-app/Voice/end_overall_2.mp3"
+from glob import glob
+import random
+
+
+def speak_contents(mode, no):
+    # path = "/home/pi/build-in-app/"
+    path = ""
+
+    filter = path + "*/" + mode + "*.mp3"
+    files = glob(filter)
+        
+    text = files[no]
 
     return text

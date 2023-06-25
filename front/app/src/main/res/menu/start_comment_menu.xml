@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/start_comment_item1"
-        android:title="item1" />
+        android:title="質問などがあれば、挙手をお願いします。" />
     <item
         android:id="@+id/start_comment_item2"
-        android:title="item2" />
+        android:title="他に質問などはありますか？" />
     <item
         android:id="@+id/start_comment_item3"
-        android:title="item3" />
+        android:title="少し時間があります、簡単な質問はありますか？" />
 </menu>
