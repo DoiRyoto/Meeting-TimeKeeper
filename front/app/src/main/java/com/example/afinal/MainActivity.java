@@ -54,31 +54,17 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                 // 状態がスタンバイなら開始用の音声を再生
                 if(Objects.equals(c.state, "standby") && String.valueOf(timerButton.getText()).equals("START")){
                     c.state = "processing"; // 状態を処理中に変更
-                    timerButton.setText("END");
-                    HttpConnectionTask task = new HttpConnectionTask(mainActivity, "start", c);
-                    task.execute();
+                    timerButton.setText("RESET");
                     String minutesString = minutesEditText.getText().toString();
                     String secondsString = secondsEditText.getText().toString();
 
                     int minutes = Integer.parseInt(minutesString);
                     int seconds = Integer.parseInt(secondsString);
                     timeHandler.startTimer(minutes, seconds);
-                } else if (String.valueOf(timerButton.getText()).equals("END")) {
+                } else if (String.valueOf(timerButton.getText()).equals("RESET")) {
                     c.state = "standby"; // 状態をスタンバイに変更
                     c.monitor = "non"; // 音声モニターもなしに変更
-                    if (isTimerExpired) {
-                        // 手動で停止した際，時間切れだったら強制終了の音声を再生
-                        stopTimer();
-                        Log.d("mode", "end-force-manual");
-                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
-                        task.execute();
-                    } else {
-                        // 手動で停止した際，時間切れでないなら終了の音声を再生
-                        stopTimer();
-                        Log.d("mode", "end-manual");
-                        HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end", c);
-                        task.execute();
-                    }
+                    stopTimer();
                 }
             }
         });
@@ -96,13 +82,12 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.start_all_item1) {
-                            // item1のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_overall", "0");
+                            task.execute();
                             return true;
                         } else if (item.getItemId() == R.id.start_all_item2) {
-                            // item2のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.start_all_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_overall", "1");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -128,13 +113,12 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.start_individual_item1) {
-                            // item1のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_individual", "0");
+                            task.execute();
                             return true;
                         } else if (item.getItemId() == R.id.start_individual_item2) {
-                            // item2のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.start_individual_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_individual", "1");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -160,13 +144,8 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.end_individual_item1) {
-                            // item1のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.end_individual_item2) {
-                            // item2のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.end_individual_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("end_individual", "0");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -192,13 +171,16 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.start_comment_item1) {
-                            // item1のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "0");
+                            task.execute();
                             return true;
                         } else if (item.getItemId() == R.id.start_comment_item2) {
-                            // item2のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "1");
+                            task.execute();
                             return true;
                         } else if (item.getItemId() == R.id.start_comment_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "2");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -224,13 +206,8 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.end_comment_item1) {
-                            // item1のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.end_comment_item2) {
-                            // item2のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.end_comment_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("end_comment", "0");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -256,13 +233,12 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.end_all_item1) {
-                            // item1のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("end_overall", "0");
+                            task.execute();
                             return true;
                         } else if (item.getItemId() == R.id.end_all_item2) {
-                            // item2のclick eventを処理
-                            return true;
-                        } else if (item.getItemId() == R.id.end_all_item3) {
-                            // item3のclick eventを処理
+                            HttpConnectionTask task = getHttpConnectionTask("end_overall", "1");
+                            task.execute();
                             return true;
                         } else {
                             return false;
@@ -279,11 +255,11 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
     @Override
     public void onUpdate(String[] time) {
+        Log.d("check", c.state);
+        Log.d("check", c.monitor);
+
         minutesEditText.setText(time[0]);
         secondsEditText.setText(time[1]);
-
-        // Log.d("check", c.state);
-        // Log.d("check", c.monitor);
 
         if (isTimerExpired) {
             // Set EditText text color to red
@@ -291,15 +267,15 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
             secondsEditText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
 
             if (Objects.equals(c.monitor, "non") && Objects.equals(c.state, "processing")) {
+                c.monitor = "monitoring";
                 // 時間切れで音声がモニターされていないなら，音声モニターを開始
-                HttpConnectionTask task = new HttpConnectionTask(mainActivity, "start-monitor", c);
+                HttpConnectionTask task = getHttpConnectionTask("start-monitoring", "-1");
                 task.execute();
             } else if(Objects.equals(c.monitor, "non") && Objects.equals(c.state, "end-monitoring")){
+                c.state = "wait-reset";
                 // 時間切れで音声モニターが終了していた場合，状態をスタンバイに変更し強制終了の音声を再生
                 // issue: タイマーが止まらない
-                c.state = "standby";
-                stopTimer();
-                HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end-force", c);
+                HttpConnectionTask task = new HttpConnectionTask(mainActivity, "end_force", "0", c);
                 task.execute();
             }
         }
@@ -313,5 +289,10 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         // Set EditText text color to default (black)
         minutesEditText.setTextColor(getResources().getColor(android.R.color.white));
         secondsEditText.setTextColor(getResources().getColor(android.R.color.white));
+    }
+
+    private HttpConnectionTask getHttpConnectionTask(String mode, String no){
+        HttpConnectionTask task = new HttpConnectionTask(mainActivity, mode, no, c);
+        return task;
     }
 }

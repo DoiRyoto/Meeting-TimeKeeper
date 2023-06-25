@@ -20,16 +20,15 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     private ProgressDialog mDialog = null;
     public String mUri;
 
-    public HttpConnectionTask(Activity parentActivity, String mode, Common c){
+    public HttpConnectionTask(Activity parentActivity, String mode, String no, Common c){
         this.mParentActivity = parentActivity;
         this.c = c;
         if (Objects.equals(mode, "start-monitor")){
             // モニター開始
             mUri = "http://192.168.32.32/~pi/voice_monitor.php";
-            c.monitor = "monitoring";
         } else {
             // 音声の再生
-            mUri = "http://192.168.32.32/~pi/voice_create.php?" + "mode=" + mode;
+            mUri = "http://192.168.32.32/~pi/voice_create.php?" + "mode=" + mode + "&" + "no=" + no;
         }
     }
 
@@ -47,18 +46,21 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String string){
-        mDialog.dismiss();
         if (Objects.equals(c.monitor, "monitoring")){
             // モニターが終了したら，状態を変更
             c.monitor = "non";
             c.state = "end-monitoring";
         }
+        mDialog.dismiss();
     }
 
     private String exec_get(){
         HttpURLConnection http = null;
         InputStream in = null;
         String src = "";
+
+        Log.d("check", mUri);
+
         try {
             URL url = new URL(mUri);
             Log.d("url", String.valueOf(url));
