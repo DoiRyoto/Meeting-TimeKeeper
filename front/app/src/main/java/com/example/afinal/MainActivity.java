@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 状態がスタンバイなら開始用の音声を再生
                 if(Objects.equals(c.state, "standby") && String.valueOf(timerButton.getText()).equals("START")){
                     c.state = "processing"; // 状態を処理中に変更
                     timerButton.setText("RESET");
@@ -146,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_individual_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_individual", "0");
                             task.execute();
+                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_comment_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_comment", "0");
                             task.execute();
+                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
@@ -235,10 +236,12 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_all_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_overall", "0");
                             task.execute();
+                            c.state = "wait-reset";
                             return true;
                         } else if (item.getItemId() == R.id.end_all_item2) {
                             HttpConnectionTask task = getHttpConnectionTask("end_overall", "1");
                             task.execute();
+                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
