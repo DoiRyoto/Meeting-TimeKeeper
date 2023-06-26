@@ -2,7 +2,7 @@ from gtts import gTTS
 import pygame
 import sys
 
-text = sys.argv[1]  
+text = sys.argv[1]
 output_file = 'output.mp3'
 
 tts = gTTS(text, lang='ja')
