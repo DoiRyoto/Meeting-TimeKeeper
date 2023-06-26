@@ -23,7 +23,7 @@ public class HttpConnectionTask extends AsyncTask<Void, Void, String> {
     public HttpConnectionTask(Activity parentActivity, String mode, String no, Common c){
         this.mParentActivity = parentActivity;
         this.c = c;
-        if (Objects.equals(mode, "start-monitor")){
+        if (Objects.equals(mode, "start-monitoring")){
             // モニター開始
             mUri = "http://192.168.32.32/~pi/voice_monitor.php";
         } else {

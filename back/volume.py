@@ -12,7 +12,7 @@ class SoundSurveillance:
     duration = 1 # callbackの速さ(1回あたりにサンプリングする秒数 duration[s]ごとに閾値を超えているかを確認)
     QUIT_COUNT_THRESHOLD = 200 # 土居の環境では1[s]あたり40のindataが取得されていた → QCT/40[s]黙ったら強制終了
     cnt = 0 # debug: duration[s]あたりの取得データ数をカウント
-    max_roop = 10 # サンプリングを行う回数の上限 → max_roop*duration[s]監視する
+    max_roop = 60 # サンプリングを行う回数の上限 → max_roop*duration[s]監視する
 
     # コンストラクタ　・・・　②
     def __init__(self):
@@ -28,7 +28,8 @@ class SoundSurveillance:
             if self.QUIT_COUNT > self.QUIT_COUNT_THRESHOLD: # カウンターいくつで終了するか
                 raise sd.CallbackStop("Sensing the stagnation of discussions.")
             with sd.InputStream(callback=self.detect_sound):
-                sd.sleep(self.duration * 1000)
+                print(int(self.duration * 1000))
+                sd.sleep(int(self.duration * 1000))
 
             self.max_roop -= 1
             if self.max_roop == 0:
@@ -36,7 +37,6 @@ class SoundSurveillance:
 
     def detect_sound(self, indata, frames, time, status):
         volume = np.linalg.norm(indata) * 30  # indataからvolumeを計算
-        self.cnt += 1
         if volume > self.VOLUME_THRESHOLD:  #volumeが閾値を超えていた時の処理    
             self.QUIT_COUNT = 0
         else:
