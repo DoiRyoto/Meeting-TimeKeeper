@@ -51,83 +51,158 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginStart="50dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/button_white"
         android:textColor="#696969"
         android:text="@string/start" />
 
-    <Button
-        android:id="@+id/start_all_button"
-        style="@android:style/Widget.Button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="ゼミ開始" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingHorizontal="50dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/start_individual_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="発表開始" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="全体" />
 
-    <Button
-        android:id="@+id/end_individual_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="発表終了" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
-    <Button
-        android:id="@+id/start_comment_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="質問開始" />
+            <Button
+                android:id="@+id/start_all_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:textColor="@color/white"
+                android:text="開始" />
 
-    <Button
-        android:id="@+id/end_comment_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="質問終了" />
+            <Button
+                android:id="@+id/end_all_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:textColor="@color/white"
+                android:text="終了" />
 
-    <Button
-        android:id="@+id/end_all_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/button_grey"
-        android:textColor="@color/white"
-        android:text="ゼミ終了" />
+        </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="発表"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/start_individual_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:textColor="@color/white"
+                android:text="開始" />
+
+            <Button
+                android:id="@+id/end_individual_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:text="終了"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="質疑"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/start_comment_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:text="開始"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/end_comment_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:textColor="@color/white"
+                android:text="終了" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="その他"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/other_button"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey"
+                android:textColor="@color/white"
+                android:text="その他" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

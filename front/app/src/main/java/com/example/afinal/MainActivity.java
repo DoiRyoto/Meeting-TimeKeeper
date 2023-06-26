@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
     private Button startCommentButton;
     private Button endCommentButton;
     private Button endAllButton;
+    private Button otherButton;
     private TimeHandler timeHandler;
     private Common c;
     private EditText minutesEditText;
@@ -46,12 +47,13 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         startCommentButton = findViewById(R.id.start_comment_button);
         endCommentButton = findViewById(R.id.end_comment_button);
         endAllButton = findViewById(R.id.end_all_button);
+        otherButton = findViewById(R.id.other_button);
         timeHandler = new TimeHandler(this);
 
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Objects.equals(c.state, "standby") && String.valueOf(timerButton.getText()).equals("START")){
+                if(String.valueOf(timerButton.getText()).equals("START")) {
                     c.state = "processing"; // 状態を処理中に変更
                     timerButton.setText("RESET");
                     String minutesString = minutesEditText.getText().toString();
@@ -145,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_individual_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_individual", "0");
                             task.execute();
-                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
@@ -208,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_comment_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_comment", "0");
                             task.execute();
-                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
@@ -236,12 +236,10 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                         if (item.getItemId() == R.id.end_all_item1) {
                             HttpConnectionTask task = getHttpConnectionTask("end_overall", "0");
                             task.execute();
-                            c.state = "wait-reset";
                             return true;
                         } else if (item.getItemId() == R.id.end_all_item2) {
                             HttpConnectionTask task = getHttpConnectionTask("end_overall", "1");
                             task.execute();
-                            c.state = "wait-reset";
                             return true;
                         } else {
                             return false;
@@ -251,6 +249,33 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
                 //popup menuを表示
                 endAllMenu.show();
+            }
+        });
+
+        otherButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                PopupMenu otherMenu = new PopupMenu(MainActivity.this, v);
+
+                otherMenu.getMenuInflater().inflate(R.menu.other_menu, otherMenu.getMenu());
+
+                otherMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.other_item1) {
+                            HttpConnectionTask task = getHttpConnectionTask("other", "0");
+                            task.execute();
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+
+                //popup menuを表示
+                otherMenu.show();
             }
         });
 
