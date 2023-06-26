@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                 if(String.valueOf(timerButton.getText()).equals("START")) {
                     c.state = "processing"; // 状態を処理中に変更
                     timerButton.setText("RESET");
+                    startCommentButton.setText("開始");
                     String minutesString = minutesEditText.getText().toString();
                     String secondsString = secondsEditText.getText().toString();
 
@@ -65,39 +66,18 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
                 } else if (String.valueOf(timerButton.getText()).equals("RESET")) {
                     c.state = "standby"; // 状態をスタンバイに変更
                     c.monitor = "non"; // 音声モニターもなしに変更
+                    startCommentButton.setText("開始");
                     stopTimer();
                 }
             }
         });
 
         startAllButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                PopupMenu startAllMenu = new PopupMenu(MainActivity.this, v);
+                HttpConnectionTask task = getHttpConnectionTask("start_overall", "0");
+                task.execute();
 
-                startAllMenu.getMenuInflater().inflate(R.menu.start_all_menu, startAllMenu.getMenu());
-
-                startAllMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.start_all_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_overall", "0");
-                            task.execute();
-                            return true;
-                        } else if (item.getItemId() == R.id.start_all_item2) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_overall", "1");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                startAllMenu.show();
             }
         });
 
@@ -105,57 +85,8 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
             @Override
             public void onClick(View v) {
-                PopupMenu startIndividualMenu = new PopupMenu(MainActivity.this, v);
-
-                startIndividualMenu.getMenuInflater().inflate(R.menu.start_individual_menu, startIndividualMenu.getMenu());
-
-                startIndividualMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.start_individual_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_individual", "0");
-                            task.execute();
-                            return true;
-                        } else if (item.getItemId() == R.id.start_individual_item2) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_individual", "1");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                startIndividualMenu.show();
-            }
-        });
-
-        endIndividualButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                PopupMenu endIndividualMenu = new PopupMenu(MainActivity.this, v);
-
-                endIndividualMenu.getMenuInflater().inflate(R.menu.end_individual_menu, endIndividualMenu.getMenu());
-
-                endIndividualMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.end_individual_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("end_individual", "0");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                endIndividualMenu.show();
+                HttpConnectionTask task = getHttpConnectionTask("start_individual", "0");
+                task.execute();
             }
         });
 
@@ -163,61 +94,38 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
             @Override
             public void onClick(View v) {
-                PopupMenu startCommentMenu = new PopupMenu(MainActivity.this, v);
+                String buttonText = (String) startCommentButton.getText();
+                if (getTimeLeft() < 90){
+                    HttpConnectionTask task = getHttpConnectionTask("start_comment", "2");
+                    task.execute();
+                } else if (Objects.equals(buttonText, "開始")){
+                    HttpConnectionTask task = getHttpConnectionTask("start_comment", "0");
+                    task.execute();
+                } else if (Objects.equals(buttonText, "継続")) {
+                    HttpConnectionTask task = getHttpConnectionTask("start_comment", "1");
+                    task.execute();
+                }
 
-                startCommentMenu.getMenuInflater().inflate(R.menu.start_comment_menu, startCommentMenu.getMenu());
-
-                startCommentMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.start_comment_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "0");
-                            task.execute();
-                            return true;
-                        } else if (item.getItemId() == R.id.start_comment_item2) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "1");
-                            task.execute();
-                            return true;
-                        } else if (item.getItemId() == R.id.start_comment_item3) {
-                            HttpConnectionTask task = getHttpConnectionTask("start_comment", "2");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                startCommentMenu.show();
+                startCommentButton.setText("継続");
             }
         });
+
+        endIndividualButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                HttpConnectionTask task = getHttpConnectionTask("end_individual", "0");
+                task.execute();
+            }
+        });
+
 
         endCommentButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                PopupMenu endCommentMenu = new PopupMenu(MainActivity.this, v);
-
-                endCommentMenu.getMenuInflater().inflate(R.menu.end_comment_menu, endCommentMenu.getMenu());
-
-                endCommentMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.end_comment_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("end_comment", "0");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                endCommentMenu.show();
+                HttpConnectionTask task = getHttpConnectionTask("end_comment", "0");
+                task.execute();
             }
         });
 
@@ -225,30 +133,8 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
 
             @Override
             public void onClick(View v) {
-                PopupMenu endAllMenu = new PopupMenu(MainActivity.this, v);
-
-                endAllMenu.getMenuInflater().inflate(R.menu.end_all_menu, endAllMenu.getMenu());
-
-                endAllMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.end_all_item1) {
-                            HttpConnectionTask task = getHttpConnectionTask("end_overall", "0");
-                            task.execute();
-                            return true;
-                        } else if (item.getItemId() == R.id.end_all_item2) {
-                            HttpConnectionTask task = getHttpConnectionTask("end_overall", "1");
-                            task.execute();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
-                //popup menuを表示
-                endAllMenu.show();
+                HttpConnectionTask task = getHttpConnectionTask("end_overall", "0");
+                task.execute();
             }
         });
 
@@ -317,6 +203,13 @@ public class MainActivity extends AppCompatActivity implements TimeHandler.Updat
         // Set EditText text color to default (black)
         minutesEditText.setTextColor(getResources().getColor(android.R.color.white));
         secondsEditText.setTextColor(getResources().getColor(android.R.color.white));
+    }
+
+    private int getTimeLeft(){
+        int min = Integer.parseInt(String.valueOf(minutesEditText.getText()));
+        int sec = Integer.parseInt(String.valueOf(secondsEditText.getText()));
+
+        return min*60 + sec;
     }
 
     private HttpConnectionTask getHttpConnectionTask(String mode, String no){
