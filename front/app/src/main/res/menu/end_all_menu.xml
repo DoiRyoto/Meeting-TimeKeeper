@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/end_all_item1"
-        android:title="お疲れ様でした。本日のゼミは終了です。" />
+        android:title="お疲れ様でした。今日のゼミは終了です。" />
     <item
         android:id="@+id/end_all_item2"
         android:title="本日のゼミはここまでとなります。" />
