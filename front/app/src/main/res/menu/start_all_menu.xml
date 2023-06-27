@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/start_all_item1"
-        android:title="それでは、本日のゼミを始めましょう。" />
+        android:title="時間になったので、ゼミを開始します。" />
     <item
         android:id="@+id/start_all_item2"
-        android:title="時間になったので、ゼミを開始します。" />
+        android:title="それでは、本日のゼミを始めましょう。" />
 </menu>
